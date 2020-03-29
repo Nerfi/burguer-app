@@ -1,4 +1,4 @@
-import  React,{Component} from 'react';
+import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burguer/Burguer';
 
