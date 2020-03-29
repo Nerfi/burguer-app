@@ -9,7 +9,7 @@ const burgerIngredient = (props) => {
   switch(props.type){
 
     case('bread-botton'):
-    ingredient = <div className="BreadBotton"></div>;
+    ingredient = <div className="BreadBottom"></div>;
     break;
 
     case('bread-top'):
