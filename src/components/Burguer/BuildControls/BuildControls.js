@@ -20,6 +20,7 @@ const buidlControls = (props) => (
      label={ctr.label}
       key={ctr.label}
       added={() => props.ingredientAdded(ctr.type)}
+      delete={() => props.ingredientDeleted(ctr.type)}
 
       />
 
