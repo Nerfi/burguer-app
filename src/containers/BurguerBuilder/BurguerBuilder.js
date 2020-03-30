@@ -20,8 +20,21 @@ class BurguerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 0
+    totalPrice: 0,
+   purchasable: false
   }
+  //checking if we can purchase it or not , based on the items we have
+  updatePurchaseState = (ingredients) => {
+    const sum = Object.values(ingredients)
+    .reduce((sum,item) => sum+item,0)
+    console.log(sum);
+
+    this.setState({ purchasable : sum > 0 });
+
+  }
+
+
+
   //adding new item to the burger
   handleAddIngredient = (type) => {
     //accessing the type we've choosen
@@ -41,13 +54,13 @@ class BurguerBuilder extends Component {
   const newPrice = oldPrice + priceAddition
   //setting the new state totalPrice and ingredients
   this.setState({totalPrice: newPrice,ingredients: updateIngredients});
-
+  this.updatePurchaseState(updateIngredients);
   }
 
   //removeIngredient
   removeIngredient = (type) => {
     const oldCount = this.state.ingredients[type];
-
+    //we do this to not delete and ingredient which is not there, otherwise we get an array of length -1, we make sure not to have this problem
     if(oldCount <= 0) {
       return;
     }
@@ -67,7 +80,7 @@ class BurguerBuilder extends Component {
   const newPrice = oldPrice - priceDeduction;
   //setting the new state totalPrice and ingredients
   this.setState({totalPrice: newPrice,ingredients: updateIngredients});
-
+  this.updatePurchaseState(updateIngredients);
   }
 
   render(){
@@ -91,6 +104,7 @@ class BurguerBuilder extends Component {
       ingredientAdded={this.handleAddIngredient}
       ingredientDeleted={this.removeIngredient}
       disable={disableInfo}
+      purchaseable={this.state.purchasable}
       price={this.state.totalPrice}
       />
 
