@@ -8,7 +8,7 @@ const INGREDIENT_PRICES = {
   salad: 0.5,
   cheese: 1.25,
   bacon: 2.25,
-  meat: 2.50
+  meat: 2.55
 }
 
 class BurguerBuilder extends Component {
@@ -47,6 +47,11 @@ class BurguerBuilder extends Component {
   //removeIngredient
   removeIngredient = (type) => {
     const oldCount = this.state.ingredients[type];
+
+    if(oldCount <= 0) {
+      return;
+    }
+
     //updating the count
     const updateCount = oldCount - 1;
     //copy of the state, is not a good practise to mutate the state directly
@@ -66,6 +71,18 @@ class BurguerBuilder extends Component {
   }
 
   render(){
+
+    const disableInfo = {
+      ...this.state.ingredients
+    };
+
+    for(let key in disableInfo) {
+      //disableInfo[key] this is the value of the values of the ingredients state
+      disableInfo[key] = disableInfo[key] <= 0 // this object will retunr true or false, so when it gets to 1 will be true
+      //that's why we can use this in BuildControl componenent as a property on the button html button
+
+    }
+
     return(
       <Aux>
       <Burger ingredients={this.state.ingredients}/>
@@ -73,6 +90,8 @@ class BurguerBuilder extends Component {
       <BuildControls
       ingredientAdded={this.handleAddIngredient}
       ingredientDeleted={this.removeIngredient}
+      disable={disableInfo}
+      price={this.state.totalPrice}
       />
 
 
