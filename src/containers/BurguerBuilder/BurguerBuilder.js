@@ -6,8 +6,8 @@ class BurguerBuilder extends Component {
   //the new way of defined state
   state = {
     ingredients: {
-      salad: 0,
-      bacon:0,
+      salad: 1,
+      bacon: 3,
       cheese: 0,
       meat: 0
     }
