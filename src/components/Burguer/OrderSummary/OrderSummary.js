@@ -2,6 +2,7 @@ import React from 'react';
 //in this case we are using {} because we are gonna manage the state
 //() is just when you want to give back some JSX code
 import Aux from '../../../hoc/Aux'; // importing our HOC component
+import Button from '../../UI/Button/Button';
 
 const orderSummary = (props) => {
   //this is how we can see/print the key values of an object
@@ -14,6 +15,7 @@ const orderSummary = (props) => {
 
   return (
     <Aux>
+
       <h3>Your oder:</h3>
       <p>your burger with ingredinets:</p>
 
@@ -21,7 +23,11 @@ const orderSummary = (props) => {
       {ingredinetSummary}
 
       </ul>
+      <p><strong>Total price: {props.price.toFixed(2)}</strong></p>
       <p>Continue to Checkout?</p>
+      <Button btnType="Danger" clicked={props.cancelPurchase}> Cancel </Button>
+      <Button btnType="Success" clicked={props.continuePurchase}> Continue</Button>
+
     </Aux>
   );
 
