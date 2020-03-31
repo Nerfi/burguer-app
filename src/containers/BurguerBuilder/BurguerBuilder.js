@@ -22,7 +22,8 @@ class BurguerBuilder extends Component {
       meat: 0
     },
     totalPrice: 0,
-   purchasable: false
+   purchasable: false,
+   purchasing: false
   }
 
   //checking if we can purchase it or not , based on the items we have
@@ -33,6 +34,12 @@ class BurguerBuilder extends Component {
 
     this.setState({ purchasable : sum > 0 }); //0 in js is considered as FALSE that's why this works with the boolean I have as initial state
   //we are basically saying above , change my initial state(false) to true when we sum is greather than 0;
+  }
+
+  //checking when we click on purchase now to display the modal component
+  handlePurchasing = () => {
+    this.setState({ purchasing: true});
+
   }
 
 
@@ -101,9 +108,14 @@ class BurguerBuilder extends Component {
     return(
       <Aux>
 
-      <Modal>
-        <OrderSummary ingredients={this.state.ingredients}/>
-      </Modal>
+
+      {this.state.purchasing ?
+        <Modal> <OrderSummary ingredients={this.state.ingredients}/> </Modal>
+         :
+       null}
+
+
+
 
       <Burger ingredients={this.state.ingredients}/>
 
@@ -112,6 +124,7 @@ class BurguerBuilder extends Component {
       ingredientDeleted={this.removeIngredient}
       disable={disableInfo}
       purchaseable={this.state.purchasable}
+      added={this.handlePurchasing}
       price={this.state.totalPrice}
       />
 

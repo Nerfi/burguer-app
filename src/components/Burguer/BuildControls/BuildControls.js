@@ -27,7 +27,7 @@ const buidlControls = (props) => (
       />
 
     })}
-    <button className="OrderButton"  disabled={!props.purchaseable}>ORDER NOW</button>
+    <button onClick={props.added} className="OrderButton"  disabled={!props.purchaseable}>ORDER NOW</button>
 
   </div>
 
