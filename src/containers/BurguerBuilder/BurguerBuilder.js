@@ -4,6 +4,7 @@ import Burger from '../../components/Burguer/Burguer';
 import BuildControls from '../../components/Burguer/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burguer/OrderSummary/OrderSummary';
+
 //Global constant
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -41,8 +42,6 @@ class BurguerBuilder extends Component {
     this.setState({ purchasing: true});
 
   }
-
-
 
   //adding new item to the burger
   handleAddIngredient = (type) => {
@@ -92,6 +91,12 @@ class BurguerBuilder extends Component {
   this.updatePurchaseState(updateIngredients);
   }
 
+  //canceling the purcahase
+
+  purchaseCancelHandler = () => {
+    this.setState({purchasing: false});
+  }
+
   render(){
 
     const disableInfo = {
@@ -108,13 +113,11 @@ class BurguerBuilder extends Component {
     return(
       <Aux>
 
+        <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
 
-      {this.state.purchasing ?
-        <Modal> <OrderSummary ingredients={this.state.ingredients}/> </Modal>
-         :
-       null}
+          <OrderSummary ingredients={this.state.ingredients}/>
 
-
+        </Modal>
 
 
       <Burger ingredients={this.state.ingredients}/>
