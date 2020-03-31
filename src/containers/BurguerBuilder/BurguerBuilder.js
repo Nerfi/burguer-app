@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burguer/Burguer';
 import BuildControls from '../../components/Burguer/BuildControls/BuildControls';
-
+import Modal from '../../components/UI/Modal/Modal';
 //Global constant
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -23,14 +23,15 @@ class BurguerBuilder extends Component {
     totalPrice: 0,
    purchasable: false
   }
+
   //checking if we can purchase it or not , based on the items we have
   updatePurchaseState = (ingredients) => {
+
     const sum = Object.values(ingredients)
-    .reduce((sum,item) => sum+item,0)
-    console.log(sum);
+    .reduce((sum,item) => sum + item,0)
 
-    this.setState({ purchasable : sum > 0 });
-
+    this.setState({ purchasable : sum > 0 }); //0 in js is considered as FALSE that's why this works with the boolean I have as initial state
+  //we are basically saying above , change my initial state(false) to true when we sum is greather than 0;
   }
 
 
@@ -98,6 +99,7 @@ class BurguerBuilder extends Component {
 
     return(
       <Aux>
+      <Modal/>
       <Burger ingredients={this.state.ingredients}/>
 
       <BuildControls
