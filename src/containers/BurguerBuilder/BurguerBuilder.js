@@ -4,7 +4,7 @@ import Burger from '../../components/Burguer/Burguer';
 import BuildControls from '../../components/Burguer/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burguer/OrderSummary/OrderSummary';
-
+import Spinner from '../../components/UI/Spinner/Spinner';
 //Global constant
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -107,7 +107,10 @@ class BurguerBuilder extends Component {
 
   //continuing with the purhcase
 
-  continuePurchaseHandler = () => {
+  continuePurchaseHandler = async () => {
+    //true because the request is just send
+    this.setState({loading: true});
+
     //in firebase we have to added the endpoint and the .json method by ourself, like here 'orders.json'
     const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
 
@@ -126,13 +129,16 @@ class BurguerBuilder extends Component {
           email: "test@test.com"
         }
       })
-    }
+    };
 
-    const postData = fetch(firebaseUrl, requestData)
+    const postData = await  fetch(firebaseUrl, requestData)
     .then(response => {
-      console.log(response)
+      //we added purchasing to false because once the promise is resolve wheather is true or false we do not wanna show the modal anymore
+      this.setState({loading: false, purchasing: false});
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      this.setState({loading: false, purchasing: false});
+    });
 
 
   }
@@ -150,17 +156,24 @@ class BurguerBuilder extends Component {
 
     }
 
-    return(
-      <Aux>
-
-        <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
-
-          <OrderSummary
+    //spinner, making the logic
+    let orderSummary = <OrderSummary
           ingredients={this.state.ingredients}
           cancelPurchase={this.purchaseCancellHanlder}
           continuePurchase={this.continuePurchaseHandler}
           price={this.state.totalPrice}
-          />
+          />;
+
+    if(this.state.loading){
+      orderSummary = <Spinner/>;
+
+    }
+
+    return(
+      <Aux>
+
+        <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
+          {orderSummary}
 
         </Modal>
 

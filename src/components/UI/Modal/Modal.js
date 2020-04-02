@@ -9,8 +9,8 @@ import Backdrop from '../Backdrop/Backdrop';
 class Modal extends Component {
 
    shouldComponentUpdate(nextProps, nextState){
-    //goona make sure if show(prop) change we update it, if not no, reason? performance
-   return nextProps.show !== this.props.show;
+    //gonna make sure if show(prop) change we update it, if not no, reason? performance
+   return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
 
   }
 
