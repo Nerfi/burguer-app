@@ -99,7 +99,7 @@ class BurguerBuilder extends Component {
 
   //canceling the purchase
 
-  purchaseContinueHanlder = () => {
+  purchaseCancellHanlder = () => {
     alert('you can\'t continue');
 
   }
@@ -107,7 +107,33 @@ class BurguerBuilder extends Component {
   //continuing with the purhcase
 
   continuePurchaseHandler = () => {
-    alert('you can continue');
+    //in firebase we have to added the endpoint and the .json method by ourself, like here 'orders.json'
+    const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
+
+    const requestData = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        ingredients: this.state.ingredients,
+        price: this.state.totalPrice,
+        customer: {
+          name: "Juan",
+          address: {
+            street:  "Murcia street",
+            country: "Spain"
+          },
+          email: "test@test.com"
+        }
+      })
+    }
+
+    const postData = fetch(firebaseUrl, requestData)
+    .then(response => {
+      console.log(response)
+    })
+    .catch(err => console.log(err));
+
+
   }
 
   render(){
@@ -130,7 +156,7 @@ class BurguerBuilder extends Component {
 
           <OrderSummary
           ingredients={this.state.ingredients}
-          cancelPurchase={this.purchaseContinueHanlder}
+          cancelPurchase={this.purchaseCancellHanlder}
           continuePurchase={this.continuePurchaseHandler}
           price={this.state.totalPrice}
           />
