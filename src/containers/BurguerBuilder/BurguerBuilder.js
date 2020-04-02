@@ -24,7 +24,8 @@ class BurguerBuilder extends Component {
     },
     totalPrice: 0,
    purchasable: false,
-   purchasing: false
+   purchasing: false,
+   loading: false
   }
 
   //checking if we can purchase it or not , based on the items we have
