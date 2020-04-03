@@ -16,18 +16,24 @@ const INGREDIENT_PRICES = {
 class BurguerBuilder extends Component {
   //the new way of defined state
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0
-    },
+    ingredients: null,
     totalPrice: 0,
    purchasable: false,
    purchasing: false,
    loading: false
   }
 
+
+//retriving data from firebase
+
+componentDidMount() {
+   fetch('https://react-my-burger-ea4f7.firebaseio.com/ingredients.json')
+   .then(response => response.json())
+  .then(data => this.setState({ingredients: data}))
+  .catch(err => console.log(err));
+
+
+}
   //checking if we can purchase it or not , based on the items we have
   updatePurchaseState = (ingredients) => {
 
@@ -157,17 +163,44 @@ class BurguerBuilder extends Component {
     }
 
     //spinner, making the logic
-    let orderSummary = <OrderSummary
+    let orderSummary = null;
+
+    //retriving data from firebase GET
+    let burger = <Spinner/>;
+
+    if(this.state.ingredients) {
+
+      burger = (
+        <Aux>
+          <Burger ingredients={this.state.ingredients}/>
+
+          <BuildControls
+          ingredientAdded={this.handleAddIngredient}
+          ingredientDeleted={this.removeIngredient}
+          disable={disableInfo}
+          purchaseable={this.state.purchasable}
+          added={this.handlePurchasing}
+          price={this.state.totalPrice}
+          />
+        </Aux>
+
+        );
+
+       orderSummary = <OrderSummary
           ingredients={this.state.ingredients}
           cancelPurchase={this.purchaseCancellHanlder}
           continuePurchase={this.continuePurchaseHandler}
           price={this.state.totalPrice}
           />;
+    }
+
+
 
     if(this.state.loading){
       orderSummary = <Spinner/>;
 
     }
+
 
     return(
       <Aux>
@@ -176,19 +209,7 @@ class BurguerBuilder extends Component {
           {orderSummary}
 
         </Modal>
-
-
-      <Burger ingredients={this.state.ingredients}/>
-
-      <BuildControls
-      ingredientAdded={this.handleAddIngredient}
-      ingredientDeleted={this.removeIngredient}
-      disable={disableInfo}
-      purchaseable={this.state.purchasable}
-      added={this.handlePurchasing}
-      price={this.state.totalPrice}
-      />
-
+        {burger}
 
       </Aux>
     );
