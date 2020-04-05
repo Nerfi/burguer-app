@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Layout from './components/Layout/Layout';
 import BurguerBuilder from  './containers/BurguerBuilder/BurguerBuilder';
 import Toolbar from './components/Navigation/Toolbar';
-
+import Checkout from './containers/checkout/Checkout';
 
 
 class App extends Component{
@@ -13,6 +13,7 @@ class App extends Component{
       <Layout>
 
       <BurguerBuilder/>
+      <Checkout/>
 
       </Layout>
 
