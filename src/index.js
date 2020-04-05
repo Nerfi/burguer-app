@@ -5,8 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 //boostrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter} from 'react-router-dom';
 
-ReactDOM.render(<App />,
+const app = (
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>
+
+);
+
+ReactDOM.render(app,
   document.getElementById('root')
 );
 

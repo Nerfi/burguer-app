@@ -10,7 +10,7 @@ const checkoutSummary = (props) => {
     <div className="checkoutSummary">
       <h1>Hope you like it </h1>
 
-      <div style={{with: '300px', height: '300px', margin: 'auto'}}>
+      <div style={{with: '100px', height: '300px', margin: 'auto'}}>
         <Burger ingredients={props.ingredients}/>
       </div>
 
