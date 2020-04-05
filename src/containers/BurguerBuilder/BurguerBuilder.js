@@ -115,36 +115,7 @@ componentDidMount() {
 
   continuePurchaseHandler = async () => {
     //true because the request is just send
-    //this.setState({loading: true});
 
-    //in firebase we have to added the endpoint and the .json method by ourself, like here 'orders.json'
-   // const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
-
-    //const requestData = {
-      //method: 'POST',
-      //headers: {'Content-Type': 'application/json'},
-      //body: JSON.stringify({
-        //ingredients: this.state.ingredients,
-        //price: this.state.totalPrice,
-        //customer: {
-          //name: "Juan",
-          //address: {
-            //street:  "Murcia street",
-            //country: "Spain"
-          //},
-          //email: "test@test.com"
-        //}
-      //})
-    //};
-
-    //const postData = await  fetch(firebaseUrl, requestData)
-    //.then(response => {
-      //we added purchasing to false because once the promise is resolve wheather is true or false we do not wanna show the modal anymore
-      //this.setState({loading: false, purchasing: false});
-    //})
-    //.catch(err => {
-      //this.setState({loading: false, purchasing: false});
-    //});
     //props.history.push are a specil props given to this component thanks the the routing wrapper we have on it
     const queryParams = [];
 
@@ -153,8 +124,10 @@ componentDidMount() {
       queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
 
     }
+    queryParams.push('price=' + this.state.totalPrice);
 
     const queryString = queryParams.join('&');
+
     this.props.history.push({
       pathname: '/checkout',
       search: '?' + queryString
@@ -176,7 +149,7 @@ componentDidMount() {
 
     }
 
-    //spinner, making the logic
+    //orderSummary is null at the beggining because we do not have any order summary to show, conditional rendering on line 158
     let orderSummary = null;
 
     //retriving data from firebase GET
