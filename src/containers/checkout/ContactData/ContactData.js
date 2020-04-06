@@ -106,7 +106,8 @@ class ContactData extends Component {
               <Input
                key={element.id}
                elementType={element.config.elementType}
-               elementConfig={element.config.elementConfig} value={element.config.value}/>
+               elementConfig={element.config.elementConfig}
+              value={element.config.value}/>
 
               ))}
           <Button clicked={this.orderHandler} btnType="Success"> Order </Button>
