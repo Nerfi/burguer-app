@@ -7,16 +7,55 @@ import Input from '../../../components/UI//Input/Input';
 
 class ContactData extends Component {
   state = {
-    name:'',
-    email: '',
-    address: {
-      street: '',
-      postCode: ''
+    orderForm: {
+          name: {
+            elementType: 'input',
+            elementConfig: {
+              type: 'text',
+              placeholder: 'your name'
+            },
+            value: ''
+
+          },
+          street: {
+            elementType: 'input',
+            elementConfig: {
+              type: 'text',
+              placeholder: 'your street name'
+            },
+            value: ''
+
+          },
+          country:{
+            elementType: 'input',
+            elementConfig: {
+              type: 'text',
+              placeholder: 'your country'
+
+            },
+            value: ''
+
+          },
+          email:{
+            elementType: 'input',
+            elementConfig: {
+              type: 'email',
+              placeholder: 'Your Email'
+            },
+            value: ''
+          },
+          deliveryMethod: {
+            elementType: 'select',
+            elementConfig: {
+              options: [{value: 'fastest', displayValue: 'Fastest'},{value: 'cheapest', displayValue: 'Cheapest'}]
+            },
+            value:'select on the way'
+          }
     },
     loading: false
   }
 
-  orderHandler = async ( e) => {
+  orderHandler = async (e) => {
     e.preventDefault();
 
     this.setState({loading: true});
@@ -30,14 +69,7 @@ class ContactData extends Component {
       body: JSON.stringify({
         ingredients: this.props.ingredients,
         price: this.props.price,
-        customer: {
-          name: "Juan",
-          address: {
-            street:  "Murcia street",
-            country: "Spain"
-          },
-          email: "test@test.com"
-        }
+
       })
     };
 
@@ -55,14 +87,28 @@ class ContactData extends Component {
   }
 
   render(){
+    //converting the state object into an array of objects
+    const formElementArray = [];
+
+    for(let keys in this.state.orderForm) {
+      formElementArray.push({
+        //we store the id to not lose it, and have one ID
+        id: keys,
+        config: this.state.orderForm[keys]
+      });
+    }
+  console.log(formElementArray)
+
   let form = (
        <form>
+           {formElementArray.map(element => (
 
-          <Input inputtype="input" type="text" name="name" placeholder="Your name"/>
-          <Input inputtype="input" type="email" name="email" placeholder="your email"/>
-          <Input inputtype="input" type="text" name="street" placeholder="your street"/>
-          <Input inputtype="input" type="text" name="name" placeholder="placeholder"/>
+              <Input
+               key={element.id}
+               elementType={element.config.elementType}
+               elementConfig={element.config.elementConfig} value={element.config.value}/>
 
+              ))}
           <Button clicked={this.orderHandler} btnType="Success"> Order </Button>
 
         </form>
