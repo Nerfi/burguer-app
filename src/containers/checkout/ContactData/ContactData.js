@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Button from '../../../components/UI/Button/Button';
 import './ContactData.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import Input from '../../../components/UI//Input/Input';
 
 
 class ContactData extends Component {
@@ -56,10 +57,12 @@ class ContactData extends Component {
   render(){
   let form = (
        <form>
-          <input className="Input" type="text" name="name" placeholder="your name" />
-          <input className="Input" type="email" name="email" placeholder="your email" />
-          <input className="Input" type="text" name="street" placeholder="your street" />
-          <input className="Input" type="text" name="postCode" placeholder="your postCode" />
+
+          <Input inputtype="input" type="text" name="name" placeholder="Your name"/>
+          <Input inputtype="input" type="email" name="email" placeholder="your email"/>
+          <Input inputtype="input" type="text" name="street" placeholder="your street"/>
+          <Input inputtype="input" type="text" name="name" placeholder="placeholder"/>
+
           <Button clicked={this.orderHandler} btnType="Success"> Order </Button>
 
         </form>
