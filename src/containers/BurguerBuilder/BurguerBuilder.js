@@ -75,6 +75,7 @@ componentDidMount() {
   //removeIngredient
   removeIngredient = (type) => {
     const oldCount = this.state.ingredients[type];
+
     //we do this to not delete and ingredient which is not there, otherwise we get an array of length -1, we make sure not to have this problem
     if(oldCount <= 0) {
       return;
@@ -82,8 +83,8 @@ componentDidMount() {
 
     //updating the count
     const updateCount = oldCount - 1;
-    //copy of the state, is not a good practise to mutate the state directly
 
+    //copy of the state, is not a good practise to mutate the state directly
     const updateIngredients = {
       ...this.state.ingredients
     };

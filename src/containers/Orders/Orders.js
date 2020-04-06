@@ -22,6 +22,8 @@ class Orders extends Component {
         for(let key in res) {
 
           fetchedOrders.push({
+            //here we use the spread operator because we want to copy the data that we have on the orignal object that I get back from fairebase
+            //that's why we use the spread operator '...' unlike in ConcatData, we we dont have nothing given back neither store ,look at that for a better understood
             ...res[key],
             id: key
           });

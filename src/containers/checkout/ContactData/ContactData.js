@@ -91,6 +91,7 @@ class ContactData extends Component {
     const formElementArray = [];
 
     for(let keys in this.state.orderForm) {
+
       formElementArray.push({
         //we store the id to not lose it, and have one ID
         id: keys,
