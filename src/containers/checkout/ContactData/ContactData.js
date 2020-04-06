@@ -60,6 +60,15 @@ class ContactData extends Component {
 
     this.setState({loading: true});
 
+      //passing userdata to the order
+    const userData = this.state.orderForm;
+    const user = {};
+  //iterating between the keys and values of the state
+    for(let key in userData) {
+      //assignningthe value typed in the form to our new user object
+        user[key] = userData[key].value;
+    }
+
    // in firebase we have to added the endpoint and the .json method by ourself, like here 'orders.json'
     const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
 
@@ -69,6 +78,7 @@ class ContactData extends Component {
       body: JSON.stringify({
         ingredients: this.props.ingredients,
         price: this.props.price,
+        userInfo: user
 
       })
     };
@@ -86,6 +96,29 @@ class ContactData extends Component {
 
   }
 
+   //create a method to handle the changes in the users input
+  handleChange = (event, inputIdentifier) => {
+    //dont touch the state directly, copying the original object
+    const formDataCopy = {...this.state.orderForm};
+
+    //here we copy the state object an we are accesing the keys on it [inputIndetifier]
+    //we are basically copying the keys in this line of code
+   const deeplyCopy = {...formDataCopy[inputIdentifier]};
+
+   //here we are assigning to the value property of that object(copy) the value of what the user haved typed in
+   //pd: calling the value property of the deeplyCopy object that we cipy an assigning the value typed by the user
+   deeplyCopy.value = event.target.value;
+
+  //not sure what are we are doing here
+   formDataCopy[inputIdentifier] = deeplyCopy;
+
+   //setting the state, the value property to what the user has typed in
+  this.setState({orderForm: formDataCopy});
+
+
+  }
+
+
   render(){
     //converting the state object into an array of objects
     const formElementArray = [];
@@ -98,20 +131,23 @@ class ContactData extends Component {
         config: this.state.orderForm[keys]
       });
     }
-  console.log(formElementArray)
+
 
   let form = (
-       <form>
+       <form onSubmit={this.orderHandler}>
+
            {formElementArray.map(element => (
 
               <Input
                key={element.id}
                elementType={element.config.elementType}
                elementConfig={element.config.elementConfig}
-              value={element.config.value}/>
+              value={element.config.value}
+              handleChange={(event) => this.handleChange(event,element.id)} //the id is just the key name of our object, that's is what we are gonna use to identifier which input type has been wrotten on
+              />
 
               ))}
-          <Button clicked={this.orderHandler} btnType="Success"> Order </Button>
+          <Button  btnType="Success"> Order </Button>
 
         </form>
         );
