@@ -17,7 +17,8 @@ class ContactData extends Component {
             value: '',
             validation: {
               required: true
-            }
+            },
+            valid: false
 
           },
           street: {
@@ -29,7 +30,8 @@ class ContactData extends Component {
             value: '',
             validation: {
               required: true
-            }
+            },
+            valid: false
 
 
           },
@@ -43,7 +45,8 @@ class ContactData extends Component {
             value: '',
             validation: {
               required: true
-            }
+            },
+            valid: false
 
 
           },
@@ -56,7 +59,8 @@ class ContactData extends Component {
             value: '',
             validation: {
               required: true
-            }
+            },
+            valid: false
 
           },
           deliveryMethod: {
@@ -111,6 +115,29 @@ class ContactData extends Component {
 
   }
 
+  //validations
+
+  checkValidaty = (value,rules) => {
+    let isValid = false;
+
+    if (rules.required) {
+
+        //trim() method to delete whitespaces at beggining or end
+        isValid = value.trim() !== '' && isValid;
+
+    }
+    //maybe i'll not use it,zip code
+    if(rules.mingLength){
+
+      isValid = value.length >= rules.mingLength
+
+    }
+
+    return isValid;
+
+
+  }
+
    //create a method to handle the changes in the users input
   handleChange = (event, inputIdentifier) => {
     //dont touch the state directly, copying the original object
@@ -123,6 +150,10 @@ class ContactData extends Component {
    //here we are assigning to the value property of that object(copy) the value of what the user haved typed in
    //pd: calling the value property of the deeplyCopy object that we cipy an assigning the value typed by the user
    deeplyCopy.value = event.target.value;
+
+   //adding validation
+   deeplyCopy.valid = this.checkValidaty(deeplyCopy.value, deeplyCopy.validation);
+
 
   //not sure what are we are doing here
    formDataCopy[inputIdentifier] = deeplyCopy;
@@ -157,7 +188,8 @@ class ContactData extends Component {
                key={element.id}
                elementType={element.config.elementType}
                elementConfig={element.config.elementConfig}
-              value={element.config.value}
+               invalid={element.config.value.valid}
+              value={element.config.keys}
               handleChange={(event) => this.handleChange(event,element.id)} //the id is just the key name of our object, that's is what we are gonna use to identifier which input type has been wrotten on
               />
 
