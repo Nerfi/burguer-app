@@ -14,7 +14,10 @@ class ContactData extends Component {
               type: 'text',
               placeholder: 'your name'
             },
-            value: ''
+            value: '',
+            validation: {
+              required: true
+            }
 
           },
           street: {
@@ -23,7 +26,11 @@ class ContactData extends Component {
               type: 'text',
               placeholder: 'your street name'
             },
-            value: ''
+            value: '',
+            validation: {
+              required: true
+            }
+
 
           },
           country:{
@@ -33,7 +40,11 @@ class ContactData extends Component {
               placeholder: 'your country'
 
             },
-            value: ''
+            value: '',
+            validation: {
+              required: true
+            }
+
 
           },
           email:{
@@ -42,7 +53,11 @@ class ContactData extends Component {
               type: 'email',
               placeholder: 'Your Email'
             },
-            value: ''
+            value: '',
+            validation: {
+              required: true
+            }
+
           },
           deliveryMethod: {
             elementType: 'select',
