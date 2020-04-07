@@ -5,16 +5,22 @@ const input = (props) => {
 
   let inputElement = null
 
-  const valid = props.invalid;
+
+  const {valid, shouldValidate, touched} = props;
+
 
   const style = ["InputElement"];
+
+  if(valid && shouldValidate && touched) {
+    style.push('Invalid');
+  }
 
 
   switch(props.elementType) {
 
 
     case('input'):
-    inputElement = <input className={valid ? style : "Invalid" }  {...props.elementConfig} value={props.value} onChange={props.handleChange} />;
+    inputElement = <input className={style}  {...props.elementConfig} value={props.value} onChange={props.handleChange} />;
     break;
 
     case('textarea'):
@@ -44,6 +50,7 @@ const input = (props) => {
     <div className="Input">
     <label className="Label">{props.label}</label>
       {inputElement}
+
     </div>
   );
 }

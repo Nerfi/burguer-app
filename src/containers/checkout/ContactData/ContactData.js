@@ -17,8 +17,10 @@ class ContactData extends Component {
             value: '',
             validation: {
               required: true
+
             },
-            valid: false
+            valid: false,
+            touched: false
 
           },
           street: {
@@ -31,7 +33,8 @@ class ContactData extends Component {
             validation: {
               required: true
             },
-            valid: false
+            valid: false,
+            touched: false
 
 
           },
@@ -46,7 +49,8 @@ class ContactData extends Component {
             validation: {
               required: true
             },
-            valid: false
+            valid: false,
+            touched: false
 
 
           },
@@ -58,9 +62,11 @@ class ContactData extends Component {
             },
             value: '',
             validation: {
-              required: true
+              required: true,
+              isEmail: true
             },
-            valid: false
+            valid: false,
+            touched: false
 
           },
           deliveryMethod: {
@@ -68,9 +74,11 @@ class ContactData extends Component {
             elementConfig: {
               options: [{value: 'fastest', displayValue: 'Fastest'},{value: 'cheapest', displayValue: 'Cheapest'}]
             },
-            value:'select on the way'
+            value:'',
+            valid: true
           }
     },
+    formIsValid: false,
     loading: false
   }
 
@@ -117,21 +125,27 @@ class ContactData extends Component {
 
   //validations
 
-  checkValidaty = (value,rules) => {
-    let isValid = false;
+  checkValidity = (value,rules) => {
 
-    if (rules.required) {
+    let isValid = true;
 
-        //trim() method to delete whitespaces at beggining or end
-        isValid = value.trim() !== '' && isValid;
+    if(!rules) {
+      return true;
+    }
+
+      if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+
+    //validation email
+    if(rules.isEmail) {
+       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        isValid = pattern.test(value) && isValid
 
     }
-    //maybe i'll not use it,zip code
-    if(rules.mingLength){
 
-      isValid = value.length >= rules.mingLength
 
-    }
 
     return isValid;
 
@@ -147,19 +161,27 @@ class ContactData extends Component {
     //we are basically copying the keys in this line of code
    const deeplyCopy = {...formDataCopy[inputIdentifier]};
 
+
    //here we are assigning to the value property of that object(copy) the value of what the user haved typed in
    //pd: calling the value property of the deeplyCopy object that we cipy an assigning the value typed by the user
    deeplyCopy.value = event.target.value;
 
    //adding validation
-   deeplyCopy.valid = this.checkValidaty(deeplyCopy.value, deeplyCopy.validation);
+    deeplyCopy.valid = this.checkValidity(deeplyCopy.value, deeplyCopy.validation);
 
+    deeplyCopy.touched = true;
 
   //not sure what are we are doing here
    formDataCopy[inputIdentifier] = deeplyCopy;
 
+   let formIsValid = true;
+
+   for(let inputIdentifier in deeplyCopy) {
+    formIsValid = deeplyCopy[inputIdentifier].valid && formIsValid;
+   }
+
    //setting the state, the value property to what the user has typed in
-  this.setState({orderForm: formDataCopy});
+  this.setState({orderForm: formDataCopy, formIsValid: formIsValid});
 
 
   }
@@ -188,13 +210,15 @@ class ContactData extends Component {
                key={element.id}
                elementType={element.config.elementType}
                elementConfig={element.config.elementConfig}
-               invalid={element.config.value.valid}
-              value={element.config.keys}
+               invalid={!element.config.valid}
+               shouldValidate={element.config.validation}
+              value={element.config.value}
+              touched={element.config.touched}
               handleChange={(event) => this.handleChange(event,element.id)} //the id is just the key name of our object, that's is what we are gonna use to identifier which input type has been wrotten on
               />
 
               ))}
-          <Button  btnType="Success"> Order </Button>
+          <Button  btnType="Success" disabled={this.state.formIsValid}> Order </Button>
 
         </form>
         );
