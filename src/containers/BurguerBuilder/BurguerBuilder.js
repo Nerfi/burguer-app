@@ -21,7 +21,7 @@ const INGREDIENT_PRICES = {
 class BurguerBuilder extends Component {
   //the new way of defined state
   state = {
-    ingredients: null,
+
     totalPrice: 0,
    purchasable: false,
    purchasing: false,
@@ -145,7 +145,7 @@ componentDidMount() {
   render(){
 
     const disableInfo = {
-      ...this.state.ingredients
+      ...this.props.ings
     };
 
     for(let key in disableInfo) {
@@ -161,15 +161,15 @@ componentDidMount() {
     //retriving data from firebase GET
     let burger = <Spinner/>;
 
-    if(this.state.ingredients) {
+    if(this.props.ings) {
 
       burger = (
         <Aux>
-          <Burger ingredients={this.state.ingredients}/>
+          <Burger ingredients={this.props.ings}/>
 
           <BuildControls
-          ingredientAdded={this.handleAddIngredient}
-          ingredientDeleted={this.removeIngredient}
+          ingredientAdded={this.props.onAddIngredient}
+          ingredientDeleted={this.props.onDeleteIngredient}
           disable={disableInfo}
           purchaseable={this.state.purchasable}
           added={this.handlePurchasing}
@@ -180,7 +180,7 @@ componentDidMount() {
         );
 
        orderSummary = <OrderSummary
-          ingredients={this.state.ingredients}
+          ingredients={this.props.ings}
           cancelPurchase={this.purchaseCancellHanlder}
           continuePurchase={this.continuePurchaseHandler}
           price={this.state.totalPrice}
@@ -213,7 +213,7 @@ componentDidMount() {
 //mappint the state to props
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients
+    ings: state.ingredients
 
   };
 };
@@ -223,8 +223,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddIngredient: () => dispatch({type: actionTypes.ADD_INGREDIENT}),
-    onDeleteIngredient: () => dispatch({type: actionTypes.REMOVE_INGREDIENT})
+    onAddIngredient: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
+    onDeleteIngredient: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingName: ingName})
 
   };
 };
