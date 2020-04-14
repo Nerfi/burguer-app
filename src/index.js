@@ -7,10 +7,23 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter} from 'react-router-dom';
 
+//adding createSore Redux
+import {createStore} from 'redux';
+//importing the provider, this will wrap our app and allow us to have acces to the parts of the state we want/need to
+import {Provider} from 'react-redux';
+
+//importing the state , in order to distrubuted in the app
+import reducer from './store/reducer';
+
+//creating the store, here we will store our state and we will serve it to the rest of the app
+const store = createStore(reducer);
+
 const app = (
-  <BrowserRouter>
-    <App/>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </Provider>
 
 );
 

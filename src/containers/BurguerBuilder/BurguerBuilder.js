@@ -5,6 +5,11 @@ import BuildControls from '../../components/Burguer/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burguer/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
+//importing connect from redux to connect out component to the store
+import {connect} from 'react-redux';
+//importing actions types
+import * as  actionTypes from '../../store/actions';
+
 //Global constant
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -27,10 +32,10 @@ class BurguerBuilder extends Component {
 //retriving data from firebase
 
 componentDidMount() {
-   fetch('https://react-my-burger-ea4f7.firebaseio.com/ingredients.json')
-   .then(response => response.json())
-  .then(data => this.setState({ingredients: data}))
-  .catch(err => console.log(err));
+   //fetch('https://react-my-burger-ea4f7.firebaseio.com/ingredients.json')
+   //.then(response => response.json())
+  //.then(data => this.setState({ingredients: data}))
+  //.catch(err => console.log(err));
 
 
 }
@@ -204,4 +209,24 @@ componentDidMount() {
 
   }
 }
-export default BurguerBuilder;
+
+//mappint the state to props
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients
+
+  };
+};
+
+
+//mapping the action and dispatching then
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddIngredient: () => dispatch({type: actionTypes.ADD_INGREDIENT}),
+    onDeleteIngredient: () => dispatch({type: actionTypes.REMOVE_INGREDIENT})
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurguerBuilder);
