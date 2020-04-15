@@ -10,19 +10,9 @@ import {connect} from 'react-redux';
 //importing actions types
 import * as  actionTypes from '../../store/actions';
 
-//Global constant
-const INGREDIENT_PRICES = {
-  salad: 0.5,
-  cheese: 1.25,
-  bacon: 2.25,
-  meat: 2.55
-}
-
 class BurguerBuilder extends Component {
   //the new way of defined state
   state = {
-
-    totalPrice: 0,
    purchasable: false,
    purchasing: false,
    loading: false
@@ -55,54 +45,6 @@ componentDidMount() {
 
   }
 
-  //adding new item to the burger
-  handleAddIngredient = (type) => {
-    //accessing the type we've choosen
-    const oldCount = this.state.ingredients[type];
-    //updating the count
-    const updateCount = oldCount + 1;
-    //copy of the state, is not a good practise to mutate the state directly
-
-    const updateIngredients = {
-      ...this.state.ingredients
-    };
-  //updating the ingredinets object with the one we've choosen
-  updateIngredients[type] = updateCount;
-
-  const priceAddition = INGREDIENT_PRICES[type];
-  const oldPrice = this.state.totalPrice;
-  const newPrice = oldPrice + priceAddition
-  //setting the new state totalPrice and ingredients
-  this.setState({totalPrice: newPrice,ingredients: updateIngredients});
-  this.updatePurchaseState(updateIngredients);
-  }
-
-  //removeIngredient
-  removeIngredient = (type) => {
-    const oldCount = this.state.ingredients[type];
-
-    //we do this to not delete and ingredient which is not there, otherwise we get an array of length -1, we make sure not to have this problem
-    if(oldCount <= 0) {
-      return;
-    }
-
-    //updating the count
-    const updateCount = oldCount - 1;
-
-    //copy of the state, is not a good practise to mutate the state directly
-    const updateIngredients = {
-      ...this.state.ingredients
-    };
-
-    updateIngredients[type] = updateCount;
-
-  const priceDeduction = INGREDIENT_PRICES[type];
-  const oldPrice = this.state.totalPrice;
-  const newPrice = oldPrice - priceDeduction;
-  //setting the new state totalPrice and ingredients
-  this.setState({totalPrice: newPrice,ingredients: updateIngredients});
-  this.updatePurchaseState(updateIngredients);
-  }
 
   //canceling the purcahase
 
@@ -173,7 +115,7 @@ componentDidMount() {
           disable={disableInfo}
           purchaseable={this.state.purchasable}
           added={this.handlePurchasing}
-          price={this.state.totalPrice}
+          price={this.props.price}
           />
         </Aux>
 
@@ -183,7 +125,7 @@ componentDidMount() {
           ingredients={this.props.ings}
           cancelPurchase={this.purchaseCancellHanlder}
           continuePurchase={this.continuePurchaseHandler}
-          price={this.state.totalPrice}
+          price={this.props.price}
           />;
     }
 
@@ -213,7 +155,8 @@ componentDidMount() {
 //mappint the state to props
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.ingredients,
+    price: state.totalPrice
 
   };
 };

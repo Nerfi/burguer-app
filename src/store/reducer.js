@@ -11,6 +11,15 @@ const burgerState = {
 
 };
 
+//prices
+const INGREDIENT_PRICES = {
+  salad: 0.5,
+  cheese: 1.25,
+  bacon: 2.25,
+  meat: 2.55
+}
+
+
 
 const reducer = (state = burgerState, action ) => {
 
@@ -23,7 +32,9 @@ const reducer = (state = burgerState, action ) => {
         //this is a payload we expect from our action
         [action.ingredientName]: state.ingredients[action.ingredientName] + 1
 
-      }
+      },
+      totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+
 
     };
 
@@ -32,8 +43,10 @@ const reducer = (state = burgerState, action ) => {
       ...state,
       ingredients: {
         ...state.ingredients,
-        [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-      }
+        [action.ingName]: state.ingredients[action.ingName] - 1
+      },
+      totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingName]
+
     };
 
     default:
