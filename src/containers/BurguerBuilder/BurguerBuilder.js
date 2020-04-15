@@ -66,12 +66,7 @@ componentDidMount() {
     //true because the request is just send
 
     //props.history.push are a specil props given to this component thanks the the routing wrapper we have on it
-
-
-    this.props.history.push({
-      pathname: '/checkout',
-      search: '?' + queryString
-    });
+    this.props.history.push('/checkout');
 
 
   }
