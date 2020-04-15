@@ -12,8 +12,8 @@ import * as  actionTypes from '../../store/actions';
 
 class BurguerBuilder extends Component {
   //the new way of defined state
+  //leaving purchasing and loading as local UI state, no need to store this in Redux store
   state = {
-   purchasable: false,
    purchasing: false,
    loading: false
   }
@@ -33,9 +33,10 @@ componentDidMount() {
   updatePurchaseState = (ingredients) => {
 
     const sum = Object.values(ingredients)
-    .reduce((sum,item) => sum + item,0)
+    .reduce((sum,item) => sum + item,0)// el 0 aqui es el valor inicial del reducer, aqui vamos a empezar desde 0 y solo vamos a hacer el btn able cuando
+    //sea mayor que > 0
 
-    this.setState({ purchasable : sum > 0 }); //0 in js is considered as FALSE that's why this works with the boolean I have as initial state
+      return  sum > 0; //0 in js is considered as FALSE that's why this works with the boolean I have as initial state
   //we are basically saying above , change my initial state(false) to true when we sum is greather than 0;
   }
 
@@ -65,16 +66,7 @@ componentDidMount() {
     //true because the request is just send
 
     //props.history.push are a specil props given to this component thanks the the routing wrapper we have on it
-    const queryParams = [];
 
-    for(let i in this.state.ingredients) {
-
-      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
-
-    }
-    queryParams.push('price=' + this.state.totalPrice);
-
-    const queryString = queryParams.join('&');
 
     this.props.history.push({
       pathname: '/checkout',
@@ -113,7 +105,7 @@ componentDidMount() {
           ingredientAdded={this.props.onAddIngredient}
           ingredientDeleted={this.props.onDeleteIngredient}
           disable={disableInfo}
-          purchaseable={this.state.purchasable}
+          purchaseable={this.updatePurchaseState(this.props.ings)}
           added={this.handlePurchasing}
           price={this.props.price}
           />

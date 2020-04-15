@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import {Route} from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
+//importing and connecting this ro Redux to manage the ingredients
+import {connect} from 'react-redux';
 
 class Checkout extends Component {
   state = {
