@@ -13,10 +13,10 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 //importing the state , in order to distrubuted in the app
-import reducer from './store/reducer';
+import burgerBuilderReducer from './store/reducers/burgerBuilder';
 
 //creating the store, here we will store our state and we will serve it to the rest of the app
-const store = createStore(reducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(burgerBuilderReducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 
 const app = (

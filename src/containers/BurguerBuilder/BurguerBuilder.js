@@ -8,7 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 //importing connect from redux to connect out component to the store
 import {connect} from 'react-redux';
 //importing actions types
-import * as  actionTypes from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions/index';
 
 class BurguerBuilder extends Component {
   //the new way of defined state
@@ -153,8 +153,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddIngredient: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
-    onDeleteIngredient: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingName: ingName})
+    onAddIngredient: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
+    onDeleteIngredient: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
 
   };
 };
