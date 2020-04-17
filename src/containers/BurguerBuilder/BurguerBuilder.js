@@ -14,19 +14,13 @@ class BurguerBuilder extends Component {
   //the new way of defined state
   //leaving purchasing and loading as local UI state, no need to store this in Redux store
   state = {
-   purchasing: false,
-   loading: false
+   purchasing: false
   }
 
 
 //retriving data from firebase
 
 componentDidMount() {
-   //fetch('https://react-my-burger-ea4f7.firebaseio.com/ingredients.json')
-   //.then(response => response.json())
-  //.then(data => this.setState({ingredients: data}))
-  //.catch(err => console.log(err));
-
 
 }
   //checking if we can purchase it or not , based on the items we have
@@ -115,14 +109,6 @@ componentDidMount() {
           price={this.props.price}
           />;
     }
-
-
-
-    if(this.state.loading){
-      orderSummary = <Spinner/>;
-
-    }
-
 
     return(
       <Aux>
