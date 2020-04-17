@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-
+//initial state
 const burgerState = {
     ingredients: null,
     totalPrice: 0
@@ -42,6 +42,14 @@ const reducer = (state = burgerState, action ) => {
       },
       totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingName]
 
+    };
+
+    case actionTypes.SET_INGREDIENTS:
+
+    return {
+      //we will have a new state, that why we copy the old state
+      ...state,
+      ingredients: action.ingredients // we know we will get the ingredients thanks to the action type 'Ingredients' defined in actions, the payload in other words
     };
 
     default:

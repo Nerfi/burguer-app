@@ -21,7 +21,7 @@ class BurguerBuilder extends Component {
 //retriving data from firebase
 
 componentDidMount() {
-
+  this.props.onInintIngredients();
 }
   //checking if we can purchase it or not , based on the items we have
   updatePurchaseState = (ingredients) => {
@@ -140,7 +140,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAddIngredient: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-    onDeleteIngredient: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
+    onDeleteIngredient: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+    onInintIngredients: () => dispatch(burgerBuilderActions.fetchingIngredients())
 
   };
 };
