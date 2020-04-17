@@ -49,7 +49,7 @@ const reducer = (state = burgerState, action ) => {
     return {
       //we will have a new state, that why we copy the old state
       ...state,
-      ingredients: action.ingredients // we know we will get the ingredients thanks to the action type 'Ingredients' defined in actions, the payload in other words
+      ingredients: action.ingredients, // we know we will get the ingredients thanks to the action type 'Ingredients' defined in actions, the payload in other words
       totalPrice: 0 //updating the price
     };
 
