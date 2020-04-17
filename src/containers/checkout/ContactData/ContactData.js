@@ -4,7 +4,7 @@ import './ContactData.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI//Input/Input';
 import {connect} from 'react-redux';
-
+import * as actions from '../../../store/actions/index';
 
 class ContactData extends Component {
   state = {
@@ -86,8 +86,6 @@ class ContactData extends Component {
   orderHandler = async (e) => {
     e.preventDefault();
 
-    this.setState({loading: true});
-
       //passing userdata to the order
     const userData = this.state.orderForm;
     const user = {};
@@ -96,10 +94,8 @@ class ContactData extends Component {
       //assignningthe value typed in the form to our new user object
         user[key] = userData[key].value;
     }
-
    // in firebase we have to added the endpoint and the .json method by ourself, like here 'orders.json'
-    const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
-
+   // const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
     const requestData = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -110,17 +106,7 @@ class ContactData extends Component {
 
       })
     };
-
-    const postData = await  fetch(firebaseUrl, requestData)
-    .then(response => {
-      //setting the loading to false once we have make the API call to that endpoint
-      this.setState({loading: false});
-      //redirecting the user once the action is completed
-      this.props.history.push('/')
-    })
-    .catch(err => {
-      this.setState({loading: false});
-    });
+    this.props.onPurchaseBurger(requestData);
 
   }
 
@@ -244,5 +230,11 @@ const mapStateToProps = state => {
   }
 }
 
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onPurchaseBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData)
+  }
+};
 export default connect(mapStateToProps)(ContactData);
 

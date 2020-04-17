@@ -1,6 +1,48 @@
 import * as actionTypes from './actionTypes';
 
-//sync code
+
+//actions types for contact page, burger succes purchase and failure
+export const purchaseSuccessBurger = (id,orderData) => {
+  return {
+    type: actionTypes.PURCHASE_BURGER_SUCCESS,
+    id: id,
+    orderData: orderData
+  };
+};
+
+
+//fail case
+export const purchaseBurgerFail = (err) => {
+  return {
+    type: actionTypes.PURCHASE_BURGER_FAIL,
+    error: err
+  };
+};
+
+//async action for the contact page
+
+export const purchaseBurgerStart = (orderData) => {
+
+  return dispatch => {
+
+    const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
+
+    const postData =  fetch(firebaseUrl, orderData)
+    .then(response => {
+      //setting the loading to false once we have make the API call to that endpoint
+      dispatch(purchaseSuccessBurger(response));
+      //redirecting the user once the action is completed
+      //this.props.history.push('/')
+    })
+    .catch(err => {
+      dispatch(purchaseBurgerFail(err));
+    });
+
+  }
+}
+
+
+//sync code Orders actions
 export const makeOrder = (order) => {
   return {
     type: actionTypes.CREATE_ORDER,
