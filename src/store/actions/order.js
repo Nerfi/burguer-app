@@ -19,12 +19,17 @@ export const purchaseBurgerFail = (err) => {
   };
 };
 
-//async action for the contact page
+export const purchaseBurger = () => {
+  return {
+    type: actionTypes.PURCHASE_BURGER_START
+  };
+};
 
+//async action for the contact page
 export const purchaseBurgerStart = (orderData) => {
 
   return dispatch => {
-
+    dispatch(purchaseBurger());
     const firebaseUrl = 'https://react-my-burger-ea4f7.firebaseio.com/orders.json';
 
     const postData =  fetch(firebaseUrl, orderData)
@@ -42,7 +47,13 @@ export const purchaseBurgerStart = (orderData) => {
 }
 
 
-//sync code Orders actions
+
+
+
+
+
+
+//sync code Orders actions, JUAn
 export const makeOrder = (order) => {
   return {
     type: actionTypes.CREATE_ORDER,

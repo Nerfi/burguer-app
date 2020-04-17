@@ -8,21 +8,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter} from 'react-router-dom';
 
 //adding createSore Redux
-import {createStore, applyMiddleware, compose} from 'redux';
+import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 //importing the provider, this will wrap our app and allow us to have acces to the parts of the state we want/need to
 import {Provider} from 'react-redux';
 
 //importing the state , in order to distrubuted in the app
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
-
+//importing second reducer
+import orderReducer from './store/reducers/order'
 //importing thunk for asyn code
 import thunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const rootReducer = combineReducers({
+  burgerBuilder: burgerBuilderReducer,
+  order: orderReducer
+
+});
 
 //creating the store, here we will store our state and we will serve it to the rest of the app
-const store = createStore(burgerBuilderReducer,  composeEnhancers(
+const store = createStore(rootReducer,  composeEnhancers(
     applyMiddleware(thunk)
   ));
 
