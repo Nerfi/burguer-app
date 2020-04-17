@@ -4,6 +4,7 @@ import {Route, Redirect} from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
 //importing and connecting this ro Redux to manage the ingredients
 import {connect} from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 class Checkout extends Component {
 
@@ -26,8 +27,10 @@ class Checkout extends Component {
 
     if(this.props.ings) {
 
+      const purchasedRedirect = this.props.purchased ? <Redirect to="/"/> : null
       summary = (
         <div>
+        {purchasedRedirect}
             <CheckoutSummary
           onCheckoutCancell={this.checkoutCancellHandler}
           onCheckoutContinue={this.checkoutContinue}
@@ -54,7 +57,8 @@ class Checkout extends Component {
 //mapping state to proos, here we do not need dispatch , because we are not dispatching any action like in burgerBuilder component
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.burgerBuilder.ingredients,
+    purchased: state.order.purchased
 
   };
 };

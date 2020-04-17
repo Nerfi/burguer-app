@@ -35,8 +35,8 @@ export const purchaseBurgerStart = (orderData) => {
     const postData =  fetch(firebaseUrl, orderData)
     .then(response => {
       //setting the loading to false once we have make the API call to that endpoint
-      dispatch(purchaseSuccessBurger(response));
-      //redirecting the user once the action is completed
+      dispatch(purchaseSuccessBurger(response.name, orderData));
+            //redirecting the user once the action is completed
       //this.props.history.push('/')
     })
     .catch(err => {
@@ -47,7 +47,11 @@ export const purchaseBurgerStart = (orderData) => {
 }
 
 
-
+export const purchaseInit = () => {
+  return {
+    type: actionTypes.PURCHASE_INIT
+  };
+};
 
 
 

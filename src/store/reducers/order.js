@@ -25,11 +25,18 @@ const orders = [];
 
 const initialState = {
   orders: [],
-  loading: false
+  loading: false,
+  purchased: false
 };
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
+
+    case actionTypes.PURCHASE_INIT:
+    return {
+      ...state,
+      purchased: false
+    }
 
     case actionTypes.PURCHASE_BURGER_START:
     return {
@@ -49,7 +56,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         //our orders now should be our old orders plus the new ones, thats what we are doing here
-        orders: state.orders.concat(newOrder)
+        orders: state.orders.concat(newOrder),
+        purchased: true
     };
 
     case actionTypes.PURCHASE_BURGER_FAIL:

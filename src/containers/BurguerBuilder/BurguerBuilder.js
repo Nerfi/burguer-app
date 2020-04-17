@@ -58,7 +58,8 @@ componentDidMount() {
 
   continuePurchaseHandler = async () => {
     //true because the request is just send
-
+    //redicrect handle here from redux
+    this.props.onInitPurchase();
     //props.history.push are a specil props given to this component thanks the the routing wrapper we have on it
     this.props.history.push('/checkout');
 
@@ -141,7 +142,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddIngredient: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
     onDeleteIngredient: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
-    onInintIngredients: () => dispatch(burgerBuilderActions.fetchingIngredients())
+    onInintIngredients: () => dispatch(burgerBuilderActions.fetchingIngredients()),
+    onInitPurchase: () => dispatch(burgerBuilderActions.purchaseInit())
 
   };
 };
