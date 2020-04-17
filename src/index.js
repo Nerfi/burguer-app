@@ -16,7 +16,8 @@ import {Provider} from 'react-redux';
 import reducer from './store/reducer';
 
 //creating the store, here we will store our state and we will serve it to the rest of the app
-const store = createStore(reducer);
+const store = createStore(reducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
 
 const app = (
   <Provider store={store}>
