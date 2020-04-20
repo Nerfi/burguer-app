@@ -14,4 +14,7 @@ export const PURCHASE_INIT = 'PURCHASE_INIT';
 
 
 //orders
-export const CREATE_ORDER = 'CREATE_ORDER';
+export const FETCH_ORDERS = 'FETCH_ORDERS';
+
+export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
+export const FETCH_ORDERS_FAIL = 'FETCH_ORDERS_FAIL';

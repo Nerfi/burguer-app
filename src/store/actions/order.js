@@ -56,25 +56,35 @@ export const purchaseInit = () => {
 
 
 
+//ORDERSS
 
-//sync code Orders actions, JUAn
-export const makeOrder = (order) => {
+export const fetchedOrdersSuccess = (orders) => {
   return {
-    type: actionTypes.CREATE_ORDER,
-    orders: order
-  };
+    type: actionTypes.FETCH_ORDERS_SUCCESS,
+    orders: orders
+  }
 };
 
 
-//handling API call, async code
+export const fetchOrdersFail = (err) => {
+  return {
+    type: actionTypes.FETCH_ORDERS_FAIL,
+    error: err
+  }
+};
 
-const fetchingOrders = () =>  {
+export const fetchedOrders = () => {
+  return {
+    type: actionTypes.FETCH_ORDERS
+  }
+}
+
+//async code
+
+export const fetchOrders = () => {
   return dispatch => {
-
-    // what I get back from fairebase is an object , I have a state as an array[], I have to convert that object into
-    //an array, done, down below
-
-    fetch('https://react-my-burger-ea4f7.firebaseio.com/orders.json')
+    dispatch(fetchedOrders())
+     fetch('https://react-my-burger-ea4f7.firebaseio.com/orders.json')
       .then(response => response.json())
       .then(res => {
 
@@ -90,9 +100,9 @@ const fetchingOrders = () =>  {
           });
         }
 
-        dispatch(makeOrder(res));
+        dispatch(fetchedOrdersSuccess(fetchedOrders));
       })
-    .catch(err => console.log(err));
+    .catch(err => dispatch(fetchOrdersFail(err)));
+  }
 
-  };
 };

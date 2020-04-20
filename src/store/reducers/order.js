@@ -1,28 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
 
-//initial state for orders reducers
-
-const orders = [];
-
-//creating reducer
-
-//const reducer = (state = orders, action) => {
-
-  //switch(action.type){
-    //case actionTypes.CREATE_ORDER:
-    //return {
-      //...state,
-      //orders: action.orders
-   // }
-  //}
-
-
-//};
-
-//action.type === actionTypes.CREATE_ORDER ? {...state,orders: action.orders} : null
-
-//max
-
 const initialState = {
   orders: [],
   loading: false,
@@ -64,6 +41,27 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       loading: false,
+
+    };
+
+    case actionTypes.FETCH_ORDERS:
+    return {
+      ...state,
+      loading: true
+
+    };
+
+    case actionTypes.FETCH_ORDERS_SUCCESS:
+    return {
+      ...state,
+      orders: action.orders,
+      loading: false
+    };
+
+    case actionTypes.FETCH_ORDERS_FAIL:
+    return {
+      ...state,
+      loading: false
 
     };
 
